@@ -7,7 +7,7 @@ public class PlayerController : MonoBehaviour
 
     Rigidbody rb;
     public float speed;
-
+    private int score = 0;
 
     void Start()
     {
@@ -40,6 +40,16 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey(KeyCode.S))
         {
             rb.AddForce(0, 0, -speed * Time.deltaTime);
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Pickup"))
+        {
+            score += 1;
+            Debug.Log("Score: " + score);
+            Destroy(other.gameObject);
         }
     }
 }
