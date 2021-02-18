@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -19,9 +20,15 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         Move();
+
+        if (health == 0)
+        {
+            Debug.Log("Game Over!");
+            health = 5;
+            score = 0;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
     }
-
-
 
     void Move()
     {
@@ -55,8 +62,13 @@ public class PlayerController : MonoBehaviour
 
         if (other.CompareTag("Trap"))
         {
-            score += 1;
+            health -= 1;
             Debug.Log("Health: " + health);
+        }
+
+        if (other.CompareTag("Goal"))
+        {
+            Debug.Log("You win!");
         }
     }
 }
