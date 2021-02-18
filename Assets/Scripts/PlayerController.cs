@@ -24,9 +24,9 @@ public class PlayerController : MonoBehaviour
         if (health == 0)
         {
             Debug.Log("Game Over!");
+            SceneManager.LoadScene(0);
             health = 5;
             score = 0;
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
     }
 
