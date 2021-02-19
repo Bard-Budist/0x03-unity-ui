@@ -14,6 +14,10 @@ public class PlayerController : MonoBehaviour
 
     public Text scoreText;
     public Text healthText;
+    public Text winText;
+    public Image bgFinal;
+
+
 
     void Start()
     {
@@ -27,10 +31,17 @@ public class PlayerController : MonoBehaviour
 
         if (health == 0)
         {
-            Debug.Log("Game Over!");
-            SceneManager.LoadScene(0);
+            //Debug.Log("Game Over!");
             health = 5;
             score = 0;
+            winText.text = "Game Over!";
+            bgFinal.color = Color.red;
+            winText.color = Color.white;
+            bgFinal.gameObject.SetActive(true);
+            SetScoreText();
+            SetHealthText();
+            StartCoroutine(LoadScene(3));
+
         }
     }
 
@@ -73,7 +84,12 @@ public class PlayerController : MonoBehaviour
 
         if (other.CompareTag("Goal"))
         {
-            Debug.Log("You win!");
+            //Debug.Log("You win!");
+            winText.text = "You Win!";
+            bgFinal.color = Color.green;
+            winText.color = Color.black;
+            bgFinal.gameObject.SetActive(true);
+            StartCoroutine(LoadScene(3));
         }
     }
 
@@ -85,5 +101,11 @@ public class PlayerController : MonoBehaviour
     void SetHealthText()
     {
         healthText.text = "Health: " + health;
+    }
+
+    IEnumerator LoadScene(float seconds)
+    {   
+        yield return new WaitForSeconds(seconds);
+        SceneManager.LoadScene(0);
     }
 }
